@@ -1,0 +1,3 @@
+valonde_egle_homepage:
+    path:     /
+    defaults: { _controller: ValondeEgleBundle:Default:index }
