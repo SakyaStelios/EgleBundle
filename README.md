@@ -1,5 +1,7 @@
-Installation
-============
+EgleBundle
+==========
+
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/63b79604-c378-4c1b-8d9b-dad325b76894/mini.png)](https://insight.sensiolabs.com/projects/63b79604-c378-4c1b-8d9b-dad325b76894)
 
 Step 1: Download the Bundle
 ---------------------------
@@ -8,7 +10,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```bash
-$ composer require <package-name> "~1"
+$ composer require valonde/egle-bundle
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -33,7 +35,8 @@ class AppKernel extends Kernel
         $bundles = array(
             // ...
 
-            new <vendor>\<bundle-name>\<bundle-long-name>(),
+            new Oneup\UploaderBundle\OneupUploaderBundle(),
+			new Valonde\EgleBundle\ValondeEgleBundle(),
         );
 
         // ...
