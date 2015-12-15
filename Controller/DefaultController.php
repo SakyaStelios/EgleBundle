@@ -46,7 +46,7 @@ class DefaultController extends Controller
             ]);
         $apiRequest->setPostField('image', $image);
         $sendRequest = $apiRequest->send();
-        dump($sendRequest)
+        dump($sendRequest);
 
         return $this->render('ValondeEgleBundle:Default:index.html.twig', array('sendRequest' => $sendRequest));
 
