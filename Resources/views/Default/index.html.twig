@@ -8,9 +8,15 @@
  	<h3>Form</h3>
  	<form method="post" enctype="multipart/form-data" action="{{ path("valonde_egle_post_imgur") }}">
  	  <input type="hidden" name="MAX_FILE_SIZE" value="50000" />
- 	  Image (&#60; 50kb): <input type="file" name="upload" /><br/>
+ 	  Image (&#60; 50kb): <input type="file" name="file" /><br/>
  	  ClientID: <input type="text" name="clientid" /><br/>
  	  <input type="submit" value="Upload to Imgur" />
  	</form>
+ 	<hr />
+ 	{% if foo is defined %}
+	 	<ul>
+	 		<li>URL: {{ imageUploaded.data.link }}</li>
+	 	</ul>
+   {% endif %}
  </body>
  </html>
