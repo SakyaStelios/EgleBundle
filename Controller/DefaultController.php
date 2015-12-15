@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Psr7\Request as Sendy;
 
 class DefaultController extends Controller
 {
@@ -40,13 +41,14 @@ class DefaultController extends Controller
         dump($image);
 
         $client = new Client();
-        $apiRequest = $client->post('https://api.imgur.com/3/image.json');
+        $apiRequest = new Request('POST', 'https://api.imgur.com/3/image.json');
         $apiRequest->setHeaders([
                 'Authorization' => 'Client-ID ' . $client_id
             ]);
         $apiRequest->setPostField('image', $image);
-        $sendRequest = $apiRequest->send();
-        dump($sendRequest);
+        $response = $client->send($apiRequest, ['timeout' => 2]);
+        dump($response);
+        dump($response->getBody());
 
         return $this->render('ValondeEgleBundle:Default:index.html.twig', array('sendRequest' => $sendRequest));
 
