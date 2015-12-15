@@ -13,8 +13,10 @@
  	  <input type="submit" value="Upload to Imgur" />
  	</form>
  	<hr />
- 	<ul>
- 		<li>URL: {{ imageUploaded.data.link }}</li>
- 	</ul>
+ 	{% if foo is defined %}
+	 	<ul>
+	 		<li>URL: {{ imageUploaded.data.link }}</li>
+	 	</ul>
+   {% endif %}
  </body>
  </html>
