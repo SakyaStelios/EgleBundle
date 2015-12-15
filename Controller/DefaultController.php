@@ -41,15 +41,14 @@ class DefaultController extends Controller
         dump($image);
 
         $client = new Client();
-        $apiRequest = new Sendy('POST', 'https://api.imgur.com/3/image.json');
-        $apiRequest->setHeaders([
-                'Authorization' => 'Client-ID ' . $client_id
-            ]);
-        $apiRequest->setPostField('image', $image);
-        $response = $client->send($apiRequest, ['timeout' => 2]);
-        dump($response);
-        dump($response->getBody());
+        $apiRequest = $client->request('POST', 'https://api.imgur.com/3/image.json', [
+        		'headers' => ['Authorization' => 'Client-ID ' . $client_id],
+        		'form_params' => ['image' => $image]
+        	]);
+        
+        dump($apiRequest);
+        dump($apiRequest->getBody());
 
-        return $this->render('ValondeEgleBundle:Default:index.html.twig', array('sendRequest' => $sendRequest));
+        return $this->render('ValondeEgleBundle:Default:index.html.twig', array('apiRequest' => $apiRequest));
     }
 }
