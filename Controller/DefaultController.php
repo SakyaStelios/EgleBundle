@@ -13,11 +13,6 @@ class DefaultController extends Controller
 {
 
     /**
-     * @Assert\File(maxSize="6000000")
-     */
-    private $file;
-
-    /**
      * @Route("/", name="valonde_egle_homepage")
      * @Method("GET")
      */
