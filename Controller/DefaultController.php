@@ -44,8 +44,6 @@ class DefaultController extends Controller
         $client_id = "a719aa61dc69b5b";
         $image = file_get_contents($brochuresDir . "/" . $fileName);
 
-        dump(base64_encode($image));
-
         $client = new Client();
         $apiRequest = $client->request('POST', 'https://api.imgur.com/3/image.json', [
                 'headers' => ['Authorization' => 'Client-ID ' . $client_id],
@@ -55,6 +53,11 @@ class DefaultController extends Controller
         dump($apiRequest);
         dump($apiRequest->getBody());
 
-        return $this->render('ValondeEgleBundle:Default:index.html.twig', array('apiRequest' => $apiRequest));
+        $body = $apiRequest->getBody();
+		$stringBody = (string) $body;
+
+		$imageUploaded = json_decode($stringBody);
+
+        return $this->render('ValondeEgleBundle:Default:index.html.twig', array('imageUploaded' => $imageUploaded));
     }
 }
