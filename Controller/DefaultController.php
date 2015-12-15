@@ -38,6 +38,8 @@ class DefaultController extends Controller
         $client_id = "a719aa61dc69b5b";
         $image = file_get_contents($brochuresDir . "/" . $fileName);
 
+        dump($image);
+
         $client = new Client();
         $apiRequest = $client->request('POST', 'https://api.imgur.com/3/image.json', [
                 'headers' => ['Authorization' => 'Client-ID ' . $client_id],
