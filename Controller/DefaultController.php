@@ -35,9 +35,9 @@ class DefaultController extends Controller
     {
 
         $file = $request->files->get('file');
-        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+        $fileName = md5(uniqid());
         $brochuresDir = $this->container->getParameter('kernel.root_dir').'/../web/uploads';
-        $file->move($brochuresDir, $fileName);
+        $file = $file->move($brochuresDir, $fileName);
 
         $url = "https://api.imgur.com/3/image.json";
         $client_id = $this->container->getParameter('imgur_id');
@@ -46,7 +46,8 @@ class DefaultController extends Controller
         $client = new Client();
         $apiRequest = $client->request('POST', 'https://api.imgur.com/3/image.json', [
                 'headers' => ['Authorization' => 'Client-ID ' . $client_id],
-                'form_params' => ['image' => base64_encode($image)]
+                'form_params' => ['image' => base64_encode($image)],
+                'timeout' => 60
         ]);
         
         $body = $apiRequest->getBody();
