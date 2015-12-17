@@ -8,9 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class DefaultController extends Controller
 {
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
 
     /**
      * @Route("/", name="valonde_egle_homepage")
@@ -27,7 +33,6 @@ class DefaultController extends Controller
      */
     public function postToImgurAction(Request $request)
     {
-        //Init guzzle post request https://api.imgur.com/3/image.json
 
         $file = $request->files->get('file');
         $fileName = md5(uniqid()).'.'.$file->guessExtension();
@@ -35,22 +40,19 @@ class DefaultController extends Controller
         $file->move($brochuresDir, $fileName);
 
         $url = "https://api.imgur.com/3/image.json";
-        $client_id = "a719aa61dc69b5b";
+        $client_id = $this->container->getParameter('imgur_id');
         $image = file_get_contents($brochuresDir . "/" . $fileName);
 
         $client = new Client();
         $apiRequest = $client->request('POST', 'https://api.imgur.com/3/image.json', [
                 'headers' => ['Authorization' => 'Client-ID ' . $client_id],
-                'form_params' => ['image' => $image]
+                'form_params' => ['image' => base64_encode($image)]
         ]);
         
-        dump($apiRequest);
-        dump($apiRequest->getBody());
-
         $body = $apiRequest->getBody();
-		$stringBody = (string) $body;
+        $stringBody = (string) $body;
 
-		$imageUploaded = json_decode($stringBody);
+        $imageUploaded = json_decode($stringBody);
 
         return $this->render('ValondeEgleBundle:Default:index.html.twig', array('imageUploaded' => $imageUploaded));
     }
