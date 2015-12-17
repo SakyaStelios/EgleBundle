@@ -8,9 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class DefaultController extends Controller
 {
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
 
     /**
      * @Route("/", name="valonde_egle_homepage")
@@ -18,7 +24,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        dump($this->container->getParameter('valondeegle.config'));
         return $this->render('ValondeEgleBundle:Default:index.html.twig');
     }
 
